@@ -27,6 +27,23 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
+<!--===============================================================================================-->	
+<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+<!--===============================================================================================-->
+
 
 </head>
 <style>
@@ -111,117 +128,57 @@
           <br>
 <!-- Login Page Start -->
 
-<style>
-  /* Google Font */
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+    <div class="wrap-login100">
+      <div class="login100-pic js-tilt" data-tilt>
+        <img src="images/img-01.png" alt="IMG">
+      </div>
 
-  * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-  }
+      <form class="login100-form validate-form">
+        <span class="login100-form-title">
+          Member Login
+        </span>
 
-  body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-  }
+        <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+          <input class="input100" type="text" name="email" placeholder="Email">
+          <span class="focus-input100"></span>
+          <span class="symbol-input100">
+            <i class="fa fa-envelope" aria-hidden="true"></i>
+          </span>
+        </div>
 
-  .container {
-      background: white;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-      text-align: center;
-      width: 100%;
-      max-width: 350px;
-  }
+        <div class="wrap-input100 validate-input" data-validate = "Password is required">
+          <input class="input100" type="password" name="pass" placeholder="Password">
+          <span class="focus-input100"></span>
+          <span class="symbol-input100">
+            <i class="fa fa-lock" aria-hidden="true"></i>
+          </span>
+        </div>
+        
+        <div class="container-login100-form-btn">
+          <button class="login100-form-btn" href="Water Billing.html">
+            Login
+          </button>
+        </div>
 
-  h2 {
-      margin-bottom: 1rem;
-      font-weight: 600;
-  }
+        <div class="text-center p-t-12">
+          <span class="txt1">
+            Forgot
+          </span>
+          <a class="txt2" href="#">
+            Username / Password?
+          </a>
+        </div>
 
-  .input-group {
-      position: relative;
-      width: 100%;
-  }
-
-  input {
-      width: 100%;
-      padding: 10px;
-      border: 2px solid #ccc;
-      border-radius: 6px;
-      font-size: 1rem;
-      outline: none;
-      transition: 0.3s;
-  }
-
-  input:focus {
-      border-color: #667eea;
-  }
-
-  .toggle-password {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
-      font-size: 1.2rem;
-      color: #666;
-  }
-
-  button {
-      margin-top: 1rem;
-      width: 100%;
-      padding: 10px;
-      background: #667eea;
-      color: white;
-      font-size: 1rem;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: 0.3s;
-  }
-
-  button:hover {
-      background: #5a67d8;
-  }
-</style>
-<div class="container">
-  <h2>Enter Password</h2>
-  <div class="input-group">
-      <input type="password" id="password" placeholder="Password">
-      <span class="toggle-password" onclick="togglePassword()">👁</span>
+        <div class="text-center p-t-136">
+          <a class="txt2" href="#">
+            Create your Account
+            <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+          </a>
+        </div>
+      </form>
+    </div>
   </div>
-  <button onclick="checkPassword()">Submit</button>
 </div>
-
-<script>
-  function checkPassword() {
-      var password = document.getElementById("password").value;
-      if (password === "mypassword") {
-          window.location.href = "protected.html"; // Redirect to the real page
-      } else {
-          alert("Incorrect password!");
-      }
-  }
-
-  function togglePassword() {
-      var passwordInput = document.getElementById("password");
-      if (passwordInput.type === "password") {
-          passwordInput.type = "text";
-      } else {
-          passwordInput.type = "password";
-      }
-  }
-</script>
-
-
-
         <!-- Login Page End -->
        
 
