@@ -285,8 +285,8 @@ function getBillingTableData() {
 
     rows.forEach((row, index) => {
         if (index > 0) { // Skip header row
-            let fromYear = row.cells[0]?.querySelector("input").value || "N/A";
-            let toYear = row.cells[1]?.querySelector("input").value || "N/A";
+            let fromYear = row.cells[0]?.querySelector("input").value || "";
+            let toYear = row.cells[1]?.querySelector("input").value || "";
             let taxDue = row.cells[2]?.querySelector("input").value || "0.00";
             let fullPayment = row.cells[3]?.querySelector("input").value || "0.00";
             let penalty = row.cells[4]?.querySelector("input").value || "0.00";
