@@ -284,3 +284,4 @@ function printBillContainer() {
     printWindow.document.close();
 }
 
+
