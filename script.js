@@ -127,7 +127,7 @@ function updatePenaltyColumn() {
 // ✅ Corrected Calculation for Full Payment, Penalty, and Total
 function calculateRow(row) {
     let assessedValue = parseFloat(document.getElementById("assessedValue").value) || 0;
-
+    
     let fromYearInput = row.cells[0]?.querySelector("input");
     let toYearInput = row.cells[1]?.querySelector("input");
     let taxDueInput = row.cells[2]?.querySelector("input");
@@ -135,26 +135,11 @@ function calculateRow(row) {
     let penaltyInput = row.cells[4]?.querySelector("input");
     let totalInput = row.cells[5]?.querySelector("input");
 
-    if (!fromYearInput || !toYearInput || !taxDueInput || !fullPaymentInput || !penaltyInput || !totalInput) return;
+    if (!fromYearInput || !toYearInput || !taxDueInput || !fullPaymentInput || !penaltyInput || !totalInput) return; 
 
-    let fromYear = fromYearInput.value.trim();
-    
-    // Check if From Year is a valid 4-digit year (between 1900 and current year)
-    let currentYear = new Date().getFullYear();
-    let isValidYear = /^\d{4}$/.test(fromYear) && fromYear >= 1900 && fromYear <= currentYear;
-
-    if (!isValidYear) {
-        // Clear all calculated fields if From Year is invalid
-        taxDueInput.value = "";
-        fullPaymentInput.value = "";
-        penaltyInput.value = "";
-        totalInput.value = "";
-        return;
-    }
-
-    let fromYearNum = parseInt(fromYear);
-    let toYearNum = parseInt(toYearInput.value) || fromYearNum;
-    let years = Math.max(1, toYearNum - fromYearNum + 1);
+    let fromYear = parseInt(fromYearInput.value) || new Date().getFullYear();
+    let toYear = parseInt(toYearInput.value) || fromYear;
+    let years = Math.max(1, toYear - fromYear + 1);
 
     // ✅ Tax Due Calculation
     let taxDue = (assessedValue * (taxPercentage / 100)).toFixed(2);
@@ -164,18 +149,18 @@ function calculateRow(row) {
     let fullPayment = (parseFloat(taxDue) * 2 * years).toFixed(2);
     fullPaymentInput.value = fullPayment;
 
-    // ✅ Penalty Calculation
-    let penaltyPercent = penaltyRates[fromYearNum] || 0;
+    // ✅ Corrected Penalty Calculation
+    let penaltyPercent = penaltyRates[fromYear] || 0;
     let penaltyAmount = ((penaltyPercent / 100) * parseFloat(fullPayment)).toFixed(2);
     penaltyInput.value = penaltyAmount;
 
-    // ✅ Total Calculation
+    // ✅ Total Calculation (Full Payment + Penalty)
     let total = (parseFloat(fullPayment) + parseFloat(penaltyAmount)).toFixed(2);
     totalInput.value = total;
 
+    // Update penalty column visibility
     updatePenaltyColumn();
 }
-
 
 // Apply to all rows on input change
 document.addEventListener("input", function (event) {
@@ -216,7 +201,7 @@ const addBillBtn = document.getElementById("addBill");
 // Attach event listener to the correct button
 addBillBtn.addEventListener("click", showBillingContainer);
 
-// Show billing container and add details + billing table data
+// Show billing container and add customer details to bill-list
 function showBillingContainer() {
     let name = document.getElementById("name").value.trim() || "N/A";
     let td = document.getElementById("td").value.trim() || "N/A";
@@ -226,41 +211,14 @@ function showBillingContainer() {
     let totalPenalties = document.getElementById("totalPenalties").value.trim() || "0.00";
     let totalBilled = document.getElementById("totalBilled").value.trim() || "0.00";
 
+    // Get the bill list container
     let billList = document.querySelector(".bill-list");
+    
+    // Create a new bill entry
     let billEntry = document.createElement("div");
     billEntry.classList.add("bill-entry");
 
-    let billingData = getBillingTableData();
-    let billingTableHTML = `
-        <table border="1" style="width: 100%; border-collapse: collapse; margin-top: 10px;">
-            <thead>
-                <tr>
-                    <th>From Year</th>
-                    <th>To Year</th>
-                    <th>Tax Due</th>
-                    <th>Full Payment</th>
-                    <th>Penalty</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>
-    `;
-
-    billingData.forEach(data => {
-        billingTableHTML += `
-            <tr>
-                <td>${data.fromYear}</td>
-                <td>${data.toYear}</td>
-                <td>₱${parseFloat(data.taxDue).toLocaleString()}</td>
-                <td>₱${parseFloat(data.fullPayment).toLocaleString()}</td>
-                <td>₱${parseFloat(data.penalty).toLocaleString()}</td>
-                <td><strong>₱${parseFloat(data.total).toLocaleString()}</strong></td>
-            </tr>
-        `;
-    });
-
-    billingTableHTML += `</tbody></table>`;
-
+    // Bill content with structured details
     billEntry.innerHTML = `
         <strong>📄 Customer Bill</strong><br>
         <b>Name:</b> ${name}<br>
@@ -270,35 +228,15 @@ function showBillingContainer() {
         <b>Total Full Payment:</b> ₱${parseFloat(totalFullPayment).toLocaleString()}<br>
         <b>Total Penalties:</b> ₱${parseFloat(totalPenalties).toLocaleString()}<br>
         <b>Total Billed:</b> <span style="color:green; font-weight:bold;">₱${parseFloat(totalBilled).toLocaleString()}</span>
-        ${billingTableHTML}
         <button class="delete-bill-btn" onclick="deleteBill(this)">🗑 Remove</button>
     `;
 
+    // Add the bill entry to the bill container
     billList.appendChild(billEntry);
+
+    // Show the bill container
     document.querySelector(".bill-container").classList.add("show");
 }
-
-// Extract billing table data
-function getBillingTableData() {
-    let rows = document.querySelectorAll(".billing-table tr");
-    let billingData = [];
-
-    rows.forEach((row, index) => {
-        if (index > 0) { // Skip header row
-            let fromYear = row.cells[0]?.querySelector("input").value || "";
-            let toYear = row.cells[1]?.querySelector("input").value || "";
-            let taxDue = row.cells[2]?.querySelector("input").value || "0.00";
-            let fullPayment = row.cells[3]?.querySelector("input").value || "0.00";
-            let penalty = row.cells[4]?.querySelector("input").value || "0.00";
-            let total = row.cells[5]?.querySelector("input").value || "0.00";
-
-            billingData.push({ fromYear, toYear, taxDue, fullPayment, penalty, total });
-        }
-    });
-
-    return billingData;
-}
-
 
 // Hide the bill container when "Close" button is clicked
 function hideBillingContainer() {
@@ -318,9 +256,12 @@ function deleteBill(button) {
 // Print the content of the bill container (excluding buttons)
 function printBillContainer() {
     let billContainer = document.querySelector(".bill-container").cloneNode(true);
+    
+    // Remove buttons from the cloned bill container
     let buttons = billContainer.querySelectorAll(".bill-buttons, .delete-bill-btn");
     buttons.forEach(button => button.remove());
 
+    // Open print window
     let printWindow = window.open("", "", "width=800,height=600");
     printWindow.document.write(`
         <html>
@@ -329,28 +270,17 @@ function printBillContainer() {
             <style>
                 body { font-family: Arial, sans-serif; margin: 20px; }
                 .bill-container { width: 100%; max-width: 8.5in; margin: auto; }
-                .bill-entry { border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; padding: 10px; }
+                .bill-entry { border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; }
                 h3 { text-align: center; }
-                table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-                th, td { border: 1px solid black; padding: 5px; text-align: center; }
             </style>
         </head>
         <body>
             <h3>🧾 Billing Details</h3>
-            <div class="bill-container">
-                ${billContainer.innerHTML}
-            </div>
-
-            <script>
-                window.onload = function() {
-                    window.print();
-                    window.close();
-                }
-            </script>
+            <div class="bill-container">${billContainer.innerHTML}</div>
+            <script>window.onload = function() { window.print(); window.close(); }</script>
         </body>
         </html>
     `);
     printWindow.document.close();
 }
-
 

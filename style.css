@@ -39,5 +39,3 @@ input, #td, #address, #assessedValue, #parcels, #month { width: 100%; padding: 6
 .clear-bill-btn:hover { background: #cc0000; }
 .print-bill-btn { background: #4CAF50; color: white; }
 .print-bill-btn:hover { background: #388E3C; }
-
-
