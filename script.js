@@ -67,10 +67,21 @@ function updateAllRows() {
     document.getElementById("totalBilled").value = totalBilled.toFixed(2);
 }
 
+// Function to validate To Year input for the first row
+function validateToYear(input) {
+    let value = parseInt(input.value) || 0;
+    if (value > 2021) {
+        showAlert("To Year cannot be greater than 2021 for the first row", "error");
+        input.value = "2021";
+        updateAllRows();
+    }
+}
+
 // Insert a new row dynamically
 function insertRow() {
     let table = document.querySelector(".billing-table");
     let newRow = table.insertRow(-1);
+    let isFirstRow = table.rows.length === 2; // Check if this is the first data row
 
     for (let i = 0; i < 6; i++) {
         let cell = newRow.insertCell(i);
@@ -81,10 +92,27 @@ function insertRow() {
             input.placeholder = "YYYY";
             input.min = "1940";
             input.max = "2024";
-            input.addEventListener("input", updateAllRows);
-        } else if (i === 1) { // "To Year" input (DISABLED)
+            input.addEventListener("input", function() {
+                updateAllRows();
+                // Update To Year based on From Year for first row
+                if (isFirstRow) {
+                    let toYearInput = this.parentNode.nextElementSibling.querySelector("input");
+                    if (!toYearInput.value) {
+                        toYearInput.value = this.value;
+                    }
+                }
+            });
+        } else if (i === 1) { // "To Year" input
             input.placeholder = "YYYY";
-            input.disabled = true; // Disable new To Year inputs
+            input.min = "1940";
+            input.max = "2024";
+            if (isFirstRow) {
+                input.addEventListener("input", function() {
+                    validateToYear(this);
+                });
+            } else {
+                input.disabled = true;
+            }
         } else {
             input.disabled = true; // Other fields auto-calculated
         }
@@ -262,7 +290,7 @@ function showBillingContainer() {
                         <td>${toYear}</td>
                         <td>₱${parseFloat(taxDue).toLocaleString()}</td>
                         <td>₱${parseFloat(fullPayment).toLocaleString()}</td>
-                        <td>${penalty}%</td>
+                        <td>${penalty}</td>
                         <td>₱${parseFloat(total).toLocaleString()}</td>
                     </tr>
                 `;
@@ -657,14 +685,8 @@ function printBillContainer() {
     printWindow.document.close();
 }
 
-// Add event listener for the parcels input to recalculate values when it changes
-document.getElementById("parcels").addEventListener("change", function() {
-    recalculateValues();
-});
-
 // Function to recalculate values based on number of parcels
 function recalculateValues() {
-    const parcels = parseInt(document.getElementById("parcels").value) || 1;
     const assessedValue = parseFloat(document.getElementById("assessedValue").value) || 0;
     
     // Get all rows in the billing table
@@ -681,8 +703,8 @@ function recalculateValues() {
         
         // Only recalculate if there's a from year
         if (fromYear) {
-            // Calculate tax due based on assessed value and parcels
-            const taxDue = (assessedValue * 0.01) / parcels;
+            // Calculate tax due based on assessed value
+            const taxDue = assessedValue * 0.01;
             
             // Update tax due cell
             const taxDueInput = cells[2].querySelector("input");
