@@ -1,0 +1,2088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LGU CONCEPCION - Water Billing System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* Modern Professional Water Billing System */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #3b82f6;
+            --primary-dark: #2563eb;
+            --primary-light: #60a5fa;
+            --primary-lighter: #dbeafe;
+            --secondary-color: #1e40af;
+            --accent-color: #06b6d4;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --warning-color: #f59e0b;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --text-light: #9ca3af;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --border-color: #e5e7eb;
+            --border-light: #f3f4f6;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            font-size: 16px;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        .header {
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-container {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-md);
+        }
+
+        .logo-icon {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.125rem;
+        }
+
+        .logo-text p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--primary-lighter);
+            color: var(--primary-color);
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success-color);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            width: 100%;
+        }
+
+        /* Search Section */
+        .search-section {
+            margin-bottom: 2rem;
+        }
+
+        .search-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .search-header {
+            padding: 2rem 2rem 1rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+        }
+
+        .search-header h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .search-header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .search-form {
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-light);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.5rem;
+            border: none;
+            border-radius: var(--radius-lg);
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-height: 48px;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            width: 100%;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-tertiary);
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .loading-spinner.show {
+            display: block;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border-light);
+            border-top: 3px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Result Section */
+        .result-section {
+            display: none;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        .result-section.show {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .result-header {
+            padding: 1.5rem 2rem;
+            background: linear-gradient(135deg, var(--success-color), #059669);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .result-header h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .clear-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .clear-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Tab Navigation */
+        .tab-navigation {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            position: relative;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-btn:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            background: var(--bg-primary);
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .tab-badge {
+            background: var(--primary-color);
+            color: white;
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 10px;
+            min-width: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .tab-btn.active .tab-badge {
+            background: var(--primary-dark);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            position: relative;
+        }
+
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .customer-details {
+            padding: 2rem;
+        }
+
+        .detail-grid {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: 1fr;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-light);
+            transition: all 0.2s ease;
+        }
+
+        .detail-item:hover {
+            background: var(--bg-tertiary);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .detail-value {
+            font-weight: 700;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        /* Bills Section */
+        .bills-container {
+            padding: 2rem;
+        }
+
+        .bills-loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .bills-loading.show {
+            display: block;
+        }
+
+        .bills-content {
+            display: none;
+        }
+
+        .bills-content.show {
+            display: block;
+        }
+
+        .bills-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-item {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-light);
+            text-align: center;
+        }
+
+        .summary-label {
+            display: block;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .summary-value {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .bills-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .bill-item {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .bill-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-light);
+        }
+
+        .bill-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .bill-id {
+            font-weight: 700;
+            color: var(--text-primary);
+            font-size: 1.125rem;
+        }
+
+        .bill-amount {
+            font-weight: 700;
+            color: var(--error-color);
+            font-size: 1.25rem;
+        }
+
+        .bill-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .bill-detail {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .bill-detail-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .bill-detail-value {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+        }
+
+        .no-bills {
+            display: none;
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .no-bills.show {
+            display: block;
+        }
+
+        .no-bills-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--success-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2rem;
+        }
+
+        .no-bills h4 {
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .no-bills p {
+            color: var(--text-secondary);
+        }
+
+        /* Payment History Section */
+        .payments-container {
+            padding: 2rem;
+        }
+
+        .payments-loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .payments-loading.show {
+            display: block;
+        }
+
+        .payments-content {
+            display: none;
+        }
+
+        .payments-content.show {
+            display: block;
+        }
+
+        .payments-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .payments-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .payment-item {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-sm);
+            border-left: 4px solid var(--success-color);
+        }
+
+        .payment-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            border-left-color: var(--primary-color);
+        }
+
+        .payment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .payment-id {
+            font-weight: 700;
+            color: var(--text-primary);
+            font-size: 1.125rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .payment-amount {
+            font-weight: 700;
+            color: var(--success-color);
+            font-size: 1.25rem;
+        }
+
+        .payment-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .payment-detail {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .payment-detail-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .payment-detail-value {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+        }
+
+        .payment-notes {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            border-left: 3px solid var(--primary-color);
+            margin-top: 1rem;
+        }
+
+        .payment-notes-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .payment-notes-text {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.5;
+            font-style: italic;
+        }
+
+        .payment-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .payment-status.completed {
+            background: #dcfce7;
+            color: var(--success-color);
+        }
+
+        .payment-status.partial {
+            background: #fef3c7;
+            color: var(--warning-color);
+        }
+
+        .payment-status.advance {
+            background: var(--primary-lighter);
+            color: var(--primary-color);
+        }
+
+        .no-payments {
+            display: none;
+            text-align: center;
+            padding: 3rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .no-payments.show {
+            display: block;
+        }
+
+        .no-payments-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2rem;
+        }
+
+        .no-payments h4 {
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .no-payments p {
+            color: var(--text-secondary);
+        }
+
+        /* Error Section */
+        .error-section {
+            display: none;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        .error-section.show {
+            display: block;
+        }
+
+        .error-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid #fecaca;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .error-icon {
+            width: 64px;
+            height: 64px;
+            background: #fee2e2;
+            color: var(--error-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+        }
+
+        .error-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--error-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .error-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-error {
+            background: var(--error-color);
+            color: white;
+        }
+
+        .btn-error:hover {
+            background: #dc2626;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border-color);
+            padding: 1.5rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* Mobile Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .logo-section {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            
+            .logo-text h1 {
+                font-size: 1.25rem;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .search-header {
+                padding: 1.5rem 1rem 1rem;
+            }
+            
+            .search-header h2 {
+                font-size: 1.5rem;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .search-form {
+                padding: 1.5rem 1rem;
+            }
+            
+            .customer-details {
+                padding: 1.5rem 1rem;
+            }
+            
+            .result-header {
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .detail-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+                text-align: left;
+            }
+            
+            .detail-value {
+                font-size: 1.125rem;
+            }
+            
+            .status-indicator {
+                font-size: 0.75rem;
+                padding: 0.375rem 0.75rem;
+            }
+            
+            .tab-btn {
+                flex-direction: column;
+                gap: 0.25rem;
+                padding: 0.75rem 0.5rem;
+                font-size: 0.875rem;
+            }
+            
+            .tab-btn i {
+                font-size: 1rem;
+            }
+            
+            .bills-container {
+                padding: 1.5rem 1rem;
+            }
+            
+            .bills-summary {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .summary-item {
+                padding: 1rem;
+            }
+            
+            .bill-item {
+                padding: 1rem;
+            }
+            
+            .bill-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .bill-details {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+            
+            .payments-container {
+                padding: 1.5rem 1rem;
+            }
+            
+            .payments-summary {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .payment-item {
+                padding: 1rem;
+            }
+            
+            .payment-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .payment-details {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 0.75rem;
+            }
+            
+            .search-header {
+                padding: 1rem 0.75rem 0.75rem;
+            }
+            
+            .search-form {
+                padding: 1rem 0.75rem;
+            }
+            
+            .customer-details {
+                padding: 1rem 0.75rem;
+            }
+            
+            .btn {
+                padding: 1rem;
+                font-size: 0.875rem;
+            }
+            
+            .form-input {
+                padding: 1rem 0.875rem;
+            }
+        }
+
+        /* Larger screens */
+        @media (min-width: 1024px) {
+            .detail-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .search-form {
+                padding: 2.5rem;
+            }
+            
+            .customer-details {
+                padding: 2.5rem;
+            }
+        }
+
+        /* Focus styles for keyboard navigation */
+        .btn:focus,
+        .form-input:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        /* Print styles */
+        @media print {
+            .header-actions,
+            .btn,
+            .loading-spinner {
+                display: none !important;
+            }
+            
+            .search-card,
+            .result-card {
+                box-shadow: none;
+                border: 1px solid #000;
+            }
+            
+            body {
+                background: white;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo-container">
+                        <i class="fas fa-tint logo-icon"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>LGU CONCEPCION</h1>
+                        <p>Water Billing System</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <div class="status-indicator">
+                        <div class="status-dot"></div>
+                        <span>System Online</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="search-section">
+                <div class="search-card">
+                    <div class="search-header">
+                        <h2><i class="fas fa-search"></i> Customer Search</h2>
+                    </div>
+                    
+                    <div class="search-form">
+                        <div class="form-group">
+                            <label for="customerIdInput" class="form-label">Customer ID</label>
+                            <input 
+                                type="text" 
+                                id="customerIdInput" 
+                                placeholder="Enter Customer ID"
+                                class="form-input"
+                            >
+                        </div>
+                        <button id="searchBtn" class="btn btn-primary">
+                            <i class="fas fa-search"></i>
+                            Search Customer
+                        </button>
+                    </div>
+
+                    <div id="loadingSpinner" class="loading-spinner">
+                        <div class="spinner"></div>
+                        <span>Searching customer information...</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="resultSection" class="result-section">
+                <div class="result-card">
+                    <div class="result-header">
+                        <h3><i class="fas fa-user"></i> Search Results</h3>
+                        <button id="clearBtn" class="clear-btn">
+                            <i class="fas fa-times"></i>
+                            Clear
+                        </button>
+                    </div>
+                    
+                    <!-- Tab Navigation -->
+                    <div class="tab-navigation">
+                        <button class="tab-btn active" data-tab="customer-info">
+                            <i class="fas fa-user"></i>
+                            Customer Information
+                        </button>
+                        <button class="tab-btn" data-tab="unpaid-bills">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                            Unpaid Bills
+                            <span id="billsCount" class="tab-badge">0</span>
+                        </button>
+                        <button class="tab-btn" data-tab="payment-history">
+                            <i class="fas fa-credit-card"></i>
+                            Payment History
+                            <span id="paymentsCount" class="tab-badge">0</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Tab Content -->
+                    <div class="tab-content">
+                        <!-- Customer Information Tab -->
+                        <div id="customer-info" class="tab-pane active">
+                            <div class="customer-details">
+                                <div class="detail-grid">
+                                    <div class="detail-item">
+                                        <span class="detail-label">Customer ID</span>
+                                        <span id="displayCustomerId" class="detail-value"></span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Name</span>
+                                        <span id="displayName" class="detail-value"></span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Type</span>
+                                        <span id="displayType" class="detail-value"></span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Barangay</span>
+                                        <span id="displayBarangay" class="detail-value"></span>
+                                    </div>
+                                    <div class="detail-item">
+                                        <span class="detail-label">Discount</span>
+                                        <span id="displayDiscount" class="detail-value"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Unpaid Bills Tab -->
+                        <div id="unpaid-bills" class="tab-pane">
+                            <div class="bills-container">
+                                <div id="billsLoading" class="bills-loading">
+                                    <div class="spinner"></div>
+                                    <span>Loading bills...</span>
+                                </div>
+                                
+                                <div id="billsContent" class="bills-content">
+                                    <div class="bills-summary">
+                                        <div class="summary-item">
+                                            <span class="summary-label">Total Unpaid Bills</span>
+                                            <span id="totalBills" class="summary-value">0</span>
+                                        </div>
+                                        <div class="summary-item">
+                                            <span class="summary-label">Total Amount Due</span>
+                                            <span id="totalAmount" class="summary-value">₱0.00</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="billsList" class="bills-list">
+                                        <!-- Bills will be populated here -->
+                                    </div>
+                                </div>
+                                
+                                <div id="noBills" class="no-bills">
+                                    <div class="no-bills-icon">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <h4>No Unpaid Bills</h4>
+                                    <p>This customer has no outstanding bills.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Payment History Tab -->
+                        <div id="payment-history" class="tab-pane">
+                            <div class="payments-container">
+                                <div id="paymentsLoading" class="payments-loading">
+                                    <div class="spinner"></div>
+                                    <span>Loading payment history...</span>
+                                </div>
+                                
+                                <div id="paymentsContent" class="payments-content">
+                                    <div class="payments-summary">
+                                        <div class="summary-item">
+                                            <span class="summary-label">Total Payments</span>
+                                            <span id="totalPayments" class="summary-value">0</span>
+                                        </div>
+                                        <div class="summary-item">
+                                            <span class="summary-label">Total Amount Paid</span>
+                                            <span id="totalPaidAmount" class="summary-value">₱0.00</span>
+                                        </div>
+                                        <div class="summary-item">
+                                            <span class="summary-label">Last Payment</span>
+                                            <span id="lastPaymentDate" class="summary-value">N/A</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="paymentsList" class="payments-list">
+                                        <!-- Payments will be populated here -->
+                                    </div>
+                                </div>
+                                
+                                <div id="noPayments" class="no-payments">
+                                    <div class="no-payments-icon">
+                                        <i class="fas fa-receipt"></i>
+                                    </div>
+                                    <h4>No Payment History</h4>
+                                    <p>This customer has no recorded payments.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="errorSection" class="error-section">
+                <div class="error-card">
+                    <div class="error-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3>Customer Not Found</h3>
+                    <p id="errorMessage">No customer found with the provided ID. Please check the Customer ID and try again.</p>
+                    <button id="errorClearBtn" class="btn btn-error">
+                        <i class="fas fa-redo"></i>
+                        Try Again
+                    </button>
+                </div>
+            </div>
+
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2024 LGU Concepcion - Water Billing System. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Alternative approach using public Google Sheets CSV export
+        // This method doesn't require an API key but needs the sheet to be publicly accessible
+
+        // Google Sheets Configuration (CSV Export Method)
+        const SHEET_ID = '1EJy_JFfM9Ii-pyI5DCv-vVG0u7R_iemOrwbJ4oZ45Cc';
+        const CUSTOMERS_SHEET = 'Customers';
+        const BILLS_SHEET = 'Bills';
+        const PAYMENTS_SHEET = 'Payments';
+
+        // DOM Elements
+        const customerIdInput = document.getElementById('customerIdInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const resultSection = document.getElementById('resultSection');
+        const errorSection = document.getElementById('errorSection');
+        const clearBtn = document.getElementById('clearBtn');
+        const errorClearBtn = document.getElementById('errorClearBtn');
+
+        // Result display elements
+        const displayCustomerId = document.getElementById('displayCustomerId');
+        const displayName = document.getElementById('displayName');
+        const displayType = document.getElementById('displayType');
+        const displayBarangay = document.getElementById('displayBarangay');
+        const displayDiscount = document.getElementById('displayDiscount');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Tab elements
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabPanes = document.querySelectorAll('.tab-pane');
+        const billsCount = document.getElementById('billsCount');
+        const paymentsCount = document.getElementById('paymentsCount');
+
+        // Bills elements
+        const billsLoading = document.getElementById('billsLoading');
+        const billsContent = document.getElementById('billsContent');
+        const noBills = document.getElementById('noBills');
+        const totalBills = document.getElementById('totalBills');
+        const totalAmount = document.getElementById('totalAmount');
+        const billsList = document.getElementById('billsList');
+
+        // Payments elements
+        const paymentsLoading = document.getElementById('paymentsLoading');
+        const paymentsContent = document.getElementById('paymentsContent');
+        const noPayments = document.getElementById('noPayments');
+        const totalPayments = document.getElementById('totalPayments');
+        const totalPaidAmount = document.getElementById('totalPaidAmount');
+        const lastPaymentDate = document.getElementById('lastPaymentDate');
+        const paymentsList = document.getElementById('paymentsList');
+
+        // Event Listeners
+        searchBtn.addEventListener('click', searchCustomer);
+        clearBtn.addEventListener('click', clearResults);
+        errorClearBtn.addEventListener('click', clearResults);
+
+        // Tab event listeners
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+        });
+
+        // Allow Enter key to trigger search
+        customerIdInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchCustomer();
+            }
+        });
+
+        /**
+         * Search for customer information using CSV export method
+         */
+        async function searchCustomer() {
+            const customerId = customerIdInput.value.trim();
+            
+            // Validate input
+            if (!customerId) {
+                showError('Please enter a Customer ID');
+                return;
+            }
+            
+            // Show loading state
+            showLoading();
+            
+            try {
+                // Use CSV export URL - this doesn't require API key
+                const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${CUSTOMERS_SHEET}`;
+                
+                // Fetch CSV data
+                const response = await fetch(csvUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const csvText = await response.text();
+                
+                // Parse CSV data
+                const csvData = parseCSV(csvText);
+                
+                // Check if data exists
+                if (!csvData || csvData.length === 0) {
+                    throw new Error('No data found in the spreadsheet');
+                }
+                
+                // Find customer by ID
+                const customer = findCustomerById(csvData, customerId);
+                
+                if (customer) {
+                    displayCustomerInfo(customer);
+                } else {
+                    showError(`Customer with ID "${customerId}" not found. Please check the Customer ID and try again.`);
+                }
+                
+            } catch (error) {
+                console.error('Search error:', error);
+                
+                // Handle specific error types
+                if (error.message.includes('403')) {
+                    showError('Access denied. Please make sure the Google Sheet is publicly accessible.');
+                } else if (error.message.includes('404')) {
+                    showError('Spreadsheet not found. Please check the Sheet ID.');
+                } else if (error.message.includes('400')) {
+                    showError('Invalid request. Please check the sheet name.');
+                } else {
+                    showError('Unable to fetch customer data. Please ensure the Google Sheet is publicly accessible and try again.');
+                }
+            } finally {
+                hideLoading();
+            }
+        }
+
+        /**
+         * Parse CSV text into array of arrays
+         * @param {string} csvText - Raw CSV text
+         * @returns {Array} - Parsed CSV data
+         */
+        function parseCSV(csvText) {
+            const lines = csvText.split('\n');
+            const result = [];
+            
+            for (let line of lines) {
+                if (line.trim()) {
+                    // Simple CSV parsing - handles quoted fields
+                    const row = [];
+                    let current = '';
+                    let inQuotes = false;
+                    
+                    for (let i = 0; i < line.length; i++) {
+                        const char = line[i];
+                        
+                        if (char === '"') {
+                            inQuotes = !inQuotes;
+                        } else if (char === ',' && !inQuotes) {
+                            row.push(current.trim().replace(/^"|"$/g, ''));
+                            current = '';
+                        } else {
+                            current += char;
+                        }
+                    }
+                    
+                    // Add the last field
+                    row.push(current.trim().replace(/^"|"$/g, ''));
+                    result.push(row);
+                }
+            }
+            
+            return result;
+        }
+
+        /**
+         * Find customer by ID in the CSV data
+         * @param {Array} csvData - Parsed CSV data
+         * @param {string} customerId - Customer ID to search for
+         * @returns {Object|null} - Customer object or null if not found
+         */
+        function findCustomerById(csvData, customerId) {
+            if (!csvData || csvData.length < 2) return null;
+            
+            // First row contains headers
+            const headers = csvData[0];
+            
+            // Find the customer row
+            for (let i = 1; i < csvData.length; i++) {
+                const row = csvData[i];
+                
+                // Assuming Customer ID is in the first column
+                if (row[0] && row[0].toString().trim() === customerId.toString().trim()) {
+                    // Create customer object
+                    const customer = {
+                        customerId: row[0] || 'N/A',
+                        name: row[1] || 'N/A',
+                        type: row[2] || 'N/A',
+                        barangay: row[3] || 'N/A',
+                        discount: row[4] || 'N/A'
+                    };
+                    
+                    return customer;
+                }
+            }
+            
+            return null;
+        }
+
+        /**
+         * Display customer information in the result section
+         * @param {Object} customer - Customer data object
+         */
+        function displayCustomerInfo(customer) {
+            // Populate the display elements
+            displayCustomerId.textContent = customer.customerId;
+            displayName.textContent = customer.name;
+            displayType.textContent = customer.type;
+            displayBarangay.textContent = customer.barangay;
+            displayDiscount.textContent = formatDiscount(customer.discount);
+            
+            // Reset tabs to customer info
+            switchTab('customer-info');
+            
+            // Load bills and payments data
+            loadCustomerBills(customer.customerId);
+            loadCustomerPayments(customer.customerId);
+            
+            // Show result section and hide error section
+            hideError();
+            showResult();
+        }
+
+        /**
+         * Show loading spinner
+         */
+        function showLoading() {
+            loadingSpinner.classList.add('show');
+            searchBtn.disabled = true;
+            searchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
+        }
+
+        /**
+         * Hide loading spinner
+         */
+        function hideLoading() {
+            loadingSpinner.classList.remove('show');
+            searchBtn.disabled = false;
+            searchBtn.innerHTML = '<i class="fas fa-search"></i> Search Customer';
+        }
+
+        /**
+         * Show result section
+         */
+        function showResult() {
+            resultSection.classList.add('show');
+            errorSection.classList.remove('show');
+        }
+
+        /**
+         * Show error message
+         * @param {string} message - Error message to display
+         */
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorSection.classList.add('show');
+            resultSection.classList.remove('show');
+        }
+
+        /**
+         * Hide error section
+         */
+        function hideError() {
+            errorSection.classList.remove('show');
+        }
+
+        /**
+         * Clear all results and reset the form
+         */
+        function clearResults() {
+            // Hide result and error sections
+            resultSection.classList.remove('show');
+            errorSection.classList.remove('show');
+            
+            // Clear input field
+            customerIdInput.value = '';
+            
+            // Focus back on input
+            customerIdInput.focus();
+            
+            // Clear display values
+            displayCustomerId.textContent = '';
+            displayName.textContent = '';
+            displayType.textContent = '';
+            displayBarangay.textContent = '';
+            displayDiscount.textContent = '';
+            
+            // Reset tabs
+            switchTab('customer-info');
+            billsCount.textContent = '0';
+            paymentsCount.textContent = '0';
+            
+            // Clear bills data
+            billsList.innerHTML = '';
+            billsContent.classList.remove('show');
+            noBills.classList.remove('show');
+            billsLoading.classList.remove('show');
+            
+            // Clear payments data
+            paymentsList.innerHTML = '';
+            paymentsContent.classList.remove('show');
+            noPayments.classList.remove('show');
+            paymentsLoading.classList.remove('show');
+        }
+
+        /**
+         * Format discount value for display
+         * @param {string} discount - Raw discount value
+         * @returns {string} - Formatted discount value
+         */
+        function formatDiscount(discount) {
+            if (!discount || discount === 'N/A') {
+                return 'No Discount';
+            }
+            
+            // If it's a percentage
+            if (discount.includes('%')) {
+                return discount;
+            }
+            
+            // If it's a number, assume it's a percentage
+            const numDiscount = parseFloat(discount);
+            if (!isNaN(numDiscount)) {
+                return `${numDiscount}%`;
+            }
+            
+            return discount;
+        }
+
+        // Add input validation
+        customerIdInput.addEventListener('input', function(e) {
+            const value = e.target.value;
+            
+            // Basic validation - you can modify this based on your ID format
+            if (value.length > 20) {
+                e.target.value = value.substring(0, 20);
+            }
+        });
+
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Escape key to clear results
+            if (e.key === 'Escape') {
+                clearResults();
+            }
+            
+            // Ctrl/Cmd + F to focus on search input
+            if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+                e.preventDefault();
+                customerIdInput.focus();
+                customerIdInput.select();
+            }
+        });
+
+        // Enhanced error handling with retry mechanism
+        let retryCount = 0;
+        const MAX_RETRIES = 3;
+
+        async function searchCustomerWithRetry() {
+            try {
+                await searchCustomer();
+                retryCount = 0; // Reset on success
+            } catch (error) {
+                if (retryCount < MAX_RETRIES) {
+                    retryCount++;
+                    console.log(`Retry attempt ${retryCount}/${MAX_RETRIES}`);
+                    setTimeout(() => searchCustomerWithRetry(), 1000 * retryCount);
+                } else {
+                    showError('Multiple attempts failed. Please check your connection and try again.');
+                    retryCount = 0;
+                }
+            }
+        }
+
+        /**
+         * Switch between tabs
+         * @param {string} tabId - ID of the tab to switch to
+         */
+        function switchTab(tabId) {
+            // Remove active class from all tabs and panes
+            tabBtns.forEach(btn => btn.classList.remove('active'));
+            tabPanes.forEach(pane => pane.classList.remove('active'));
+            
+            // Add active class to selected tab and pane
+            const selectedTab = document.querySelector(`[data-tab="${tabId}"]`);
+            const selectedPane = document.getElementById(tabId);
+            
+            if (selectedTab && selectedPane) {
+                selectedTab.classList.add('active');
+                selectedPane.classList.add('active');
+            }
+        }
+
+        /**
+         * Load customer bills from the Bills sheet
+         * @param {string} customerId - Customer ID to search for
+         */
+        async function loadCustomerBills(customerId) {
+            try {
+                // Show loading state
+                billsLoading.classList.add('show');
+                billsContent.classList.remove('show');
+                noBills.classList.remove('show');
+                
+                // Fetch bills data
+                const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${BILLS_SHEET}`;
+                const response = await fetch(csvUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const csvText = await response.text();
+                const csvData = parseCSV(csvText);
+                
+                if (!csvData || csvData.length === 0) {
+                    throw new Error('No bills data found');
+                }
+                
+                // Filter bills for this customer
+                const customerBills = filterBillsByCustomerId(csvData, customerId);
+                
+                // Display bills
+                displayBills(customerBills);
+                
+            } catch (error) {
+                console.error('Error loading bills:', error);
+                // Show no bills message on error
+                showNoBills();
+            } finally {
+                billsLoading.classList.remove('show');
+            }
+        }
+
+        /**
+         * Filter bills by customer ID
+         * @param {Array} billsData - Raw bills data
+         * @param {string} customerId - Customer ID to filter by
+         * @returns {Array} - Filtered bills
+         */
+        function filterBillsByCustomerId(billsData, customerId) {
+            if (!billsData || billsData.length < 2) return [];
+            
+            const headers = billsData[0];
+            const bills = [];
+            
+            // Find column indices
+            const customerIdIndex = headers.findIndex(h => h.toLowerCase().includes('customerid'));
+            const billIdIndex = headers.findIndex(h => h.toLowerCase().includes('billid'));
+            const monthYearIndex = headers.findIndex(h => h.toLowerCase().includes('month') || h.toLowerCase().includes('year'));
+            const prevReadingIndex = headers.findIndex(h => h.toLowerCase().includes('previous'));
+            const currReadingIndex = headers.findIndex(h => h.toLowerCase().includes('current'));
+            const consumptionIndex = headers.findIndex(h => h.toLowerCase().includes('consumption'));
+            const amountIndex = headers.findIndex(h => h.toLowerCase().includes('amount'));
+            
+            // Process each row
+            for (let i = 1; i < billsData.length; i++) {
+                const row = billsData[i];
+                
+                if (row[customerIdIndex] && row[customerIdIndex].toString().trim() === customerId.toString().trim()) {
+                    const bill = {
+                        billId: row[billIdIndex] || 'N/A',
+                        monthYear: row[monthYearIndex] || 'N/A',
+                        previousReading: row[prevReadingIndex] || '0',
+                        currentReading: row[currReadingIndex] || '0',
+                        consumption: row[consumptionIndex] || '0',
+                        amount: row[amountIndex] || '0'
+                    };
+                    bills.push(bill);
+                }
+            }
+            
+            return bills;
+        }
+
+        /**
+         * Display bills in the UI
+         * @param {Array} bills - Array of bill objects
+         */
+        function displayBills(bills) {
+            if (!bills || bills.length === 0) {
+                showNoBills();
+                return;
+            }
+            
+            // Calculate totals
+            const totalBillsCount = bills.length;
+            const totalAmountDue = bills.reduce((sum, bill) => {
+                const amount = parseFloat(bill.amount) || 0;
+                return sum + amount;
+            }, 0);
+            
+            // Update summary
+            totalBills.textContent = totalBillsCount;
+            totalAmount.textContent = formatCurrency(totalAmountDue);
+            billsCount.textContent = totalBillsCount;
+            
+            // Generate bills HTML
+            const billsHTML = bills.map(bill => `
+                <div class="bill-item">
+                    <div class="bill-header">
+                        <div class="bill-id">Bill #${bill.billId}</div>
+                        <div class="bill-amount">${formatCurrency(parseFloat(bill.amount) || 0)}</div>
+                    </div>
+                    <div class="bill-details">
+                        <div class="bill-detail">
+                            <span class="bill-detail-label">Period</span>
+                            <span class="bill-detail-value">${bill.monthYear}</span>
+                        </div>
+                        <div class="bill-detail">
+                            <span class="bill-detail-label">Previous Reading</span>
+                            <span class="bill-detail-value">${bill.previousReading} m³</span>
+                        </div>
+                        <div class="bill-detail">
+                            <span class="bill-detail-label">Current Reading</span>
+                            <span class="bill-detail-value">${bill.currentReading} m³</span>
+                        </div>
+                        <div class="bill-detail">
+                            <span class="bill-detail-label">Consumption</span>
+                            <span class="bill-detail-value">${bill.consumption} m³</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            billsList.innerHTML = billsHTML;
+            
+            // Show bills content
+            billsContent.classList.add('show');
+            noBills.classList.remove('show');
+        }
+
+        /**
+         * Show no bills message
+         */
+        function showNoBills() {
+            billsContent.classList.remove('show');
+            noBills.classList.add('show');
+            billsCount.textContent = '0';
+        }
+
+        /**
+         * Format currency value
+         * @param {number} amount - Amount to format
+         * @returns {string} - Formatted currency
+         */
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-PH', {
+                style: 'currency',
+                currency: 'PHP'
+            }).format(amount);
+        }
+
+        /**
+         * Load customer payments from the Payments sheet
+         * @param {string} customerId - Customer ID to search for
+         */
+        async function loadCustomerPayments(customerId) {
+            try {
+                // Show loading state
+                paymentsLoading.classList.add('show');
+                paymentsContent.classList.remove('show');
+                noPayments.classList.remove('show');
+                
+                // Fetch payments data
+                const csvUrl = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${PAYMENTS_SHEET}`;
+                const response = await fetch(csvUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const csvText = await response.text();
+                const csvData = parseCSV(csvText);
+                
+                if (!csvData || csvData.length === 0) {
+                    throw new Error('No payments data found');
+                }
+                
+                // Filter payments for this customer
+                const customerPayments = filterPaymentsByCustomerId(csvData, customerId);
+                
+                // Display payments
+                displayPayments(customerPayments);
+                
+            } catch (error) {
+                console.error('Error loading payments:', error);
+                // Show no payments message on error
+                showNoPayments();
+            } finally {
+                paymentsLoading.classList.remove('show');
+            }
+        }
+
+        /**
+         * Filter payments by customer ID
+         * @param {Array} paymentsData - Raw payments data
+         * @param {string} customerId - Customer ID to filter by
+         * @returns {Array} - Filtered payments
+         */
+        function filterPaymentsByCustomerId(paymentsData, customerId) {
+            if (!paymentsData || paymentsData.length < 2) return [];
+            
+            const headers = paymentsData[0];
+            const payments = [];
+            
+            // Find column indices
+            const customerIdIndex = headers.findIndex(h => h.toLowerCase().includes('customerid'));
+            const paymentIdIndex = headers.findIndex(h => h.toLowerCase().includes('paymentid'));
+            const monthsPaidIndex = headers.findIndex(h => h.toLowerCase().includes('monthspaid'));
+            const billCountIndex = headers.findIndex(h => h.toLowerCase().includes('billcount'));
+            const totalBaseAmountIndex = headers.findIndex(h => h.toLowerCase().includes('totalbaseamount'));
+            const totalSurchargeAmountIndex = headers.findIndex(h => h.toLowerCase().includes('totalsurchargeamount'));
+            const billTotalAmountIndex = headers.findIndex(h => h.toLowerCase().includes('billtotalamount'));
+            const actualPaymentAmountIndex = headers.findIndex(h => h.toLowerCase().includes('actualpaymentamount'));
+            const advanceAmountIndex = headers.findIndex(h => h.toLowerCase().includes('advanceamount'));
+            const paymentDateIndex = headers.findIndex(h => h.toLowerCase().includes('paymentdate'));
+            const recordedDateIndex = headers.findIndex(h => h.toLowerCase().includes('recordeddate'));
+            const recordedByIndex = headers.findIndex(h => h.toLowerCase().includes('recordedby'));
+            const notesIndex = headers.findIndex(h => h.toLowerCase().includes('notes'));
+            const billDetailsIndex = headers.findIndex(h => h.toLowerCase().includes('billdetails'));
+            
+            // Process each row
+            for (let i = 1; i < paymentsData.length; i++) {
+                const row = paymentsData[i];
+                
+                if (row[customerIdIndex] && row[customerIdIndex].toString().trim() === customerId.toString().trim()) {
+                    const payment = {
+                        paymentId: row[paymentIdIndex] || 'N/A',
+                        monthsPaid: row[monthsPaidIndex] || 'N/A',
+                        billCount: row[billCountIndex] || '0',
+                        totalBaseAmount: row[totalBaseAmountIndex] || '0',
+                        totalSurchargeAmount: row[totalSurchargeAmountIndex] || '0',
+                        billTotalAmount: row[billTotalAmountIndex] || '0',
+                        actualPaymentAmount: row[actualPaymentAmountIndex] || '0',
+                        advanceAmount: row[advanceAmountIndex] || '0',
+                        paymentDate: row[paymentDateIndex] || 'N/A',
+                        recordedDate: row[recordedDateIndex] || 'N/A',
+                        recordedBy: row[recordedByIndex] || 'N/A',
+                        notes: row[notesIndex] || '',
+                        billDetails: row[billDetailsIndex] || ''
+                    };
+                    payments.push(payment);
+                }
+            }
+            
+            // Sort payments by payment date (newest first)
+            payments.sort((a, b) => {
+                const dateA = new Date(a.paymentDate);
+                const dateB = new Date(b.paymentDate);
+                return dateB - dateA;
+            });
+            
+            return payments;
+        }
+
+        /**
+         * Display payments in the UI
+         * @param {Array} payments - Array of payment objects
+         */
+        function displayPayments(payments) {
+            if (!payments || payments.length === 0) {
+                showNoPayments();
+                return;
+            }
+            
+            // Calculate totals
+            const totalPaymentsCount = payments.length;
+            const totalAmountPaid = payments.reduce((sum, payment) => {
+                const amount = parseFloat(payment.actualPaymentAmount) || 0;
+                return sum + amount;
+            }, 0);
+            
+            // Get last payment date
+            const lastPayment = payments[0]; // Already sorted by date
+            const lastPaymentDateFormatted = formatDate(lastPayment.paymentDate);
+            
+            // Update summary
+            totalPayments.textContent = totalPaymentsCount;
+            totalPaidAmount.textContent = formatCurrency(totalAmountPaid);
+            lastPaymentDate.textContent = lastPaymentDateFormatted;
+            paymentsCount.textContent = totalPaymentsCount;
+            
+            // Generate payments HTML
+            const paymentsHTML = payments.map(payment => {
+                const actualAmount = parseFloat(payment.actualPaymentAmount) || 0;
+                const billAmount = parseFloat(payment.billTotalAmount) || 0;
+                const advanceAmount = parseFloat(payment.advanceAmount) || 0;
+                
+                // Determine payment status
+                let status = 'completed';
+                let statusText = 'Completed';
+                
+                if (advanceAmount > 0) {
+                    status = 'advance';
+                    statusText = 'With Advance';
+                } else if (actualAmount < billAmount) {
+                    status = 'partial';
+                    statusText = 'Partial Payment';
+                }
+                
+                return `
+                    <div class="payment-item">
+                        <div class="payment-header">
+                            <div class="payment-id">
+                                <i class="fas fa-receipt"></i>
+                                Payment #${payment.paymentId}
+                            </div>
+                            <div class="payment-amount">${formatCurrency(actualAmount)}</div>
+                        </div>
+                        <div class="payment-details">
+                            <div class="payment-detail">
+                                <span class="payment-detail-label">Payment Date</span>
+                                <span class="payment-detail-value">${formatDate(payment.paymentDate)}</span>
+                            </div>
+                            <div class="payment-detail">
+                                <span class="payment-detail-label">Months Paid</span>
+                                <span class="payment-detail-value">${payment.monthsPaid}</span>
+                            </div>
+                            <div class="payment-detail">
+                                <span class="payment-detail-label">Bills Count</span>
+                                <span class="payment-detail-value">${payment.billCount}</span>
+                            </div>
+                            <div class="payment-detail">
+                                <span class="payment-detail-label">Base Amount</span>
+                                <span class="payment-detail-value">${formatCurrency(parseFloat(payment.totalBaseAmount) || 0)}</span>
+                            </div>
+                            <div class="payment-detail">
+                                <span class="payment-detail-label">Surcharge</span>
+                                <span class="payment-detail-value">${formatCurrency(parseFloat(payment.totalSurchargeAmount) || 0)}</span>
+                            </div>
+                            <div class="payment-detail">
+                                <span class="payment-detail-label">Bill Total</span>
+                                <span class="payment-detail-value">${formatCurrency(billAmount)}</span>
+                            </div>
+                            ${advanceAmount > 0 ? `
+                            <div class="payment-detail">
+                                <span class="payment-detail-label">Advance Amount</span>
+                                <span class="payment-detail-value">${formatCurrency(advanceAmount)}</span>
+                            </div>
+                            ` : ''}
+                            <div class="payment-detail">
+                                <span class="payment-detail-label">Status</span>
+                                <span class="payment-status ${status}">${statusText}</span>
+                            </div>
+                            <div class="payment-detail">
+                                <span class="payment-detail-label">Collector Name</span>
+                                <span class="payment-detail-value">${payment.recordedBy}</span>
+                            </div>
+                        </div>
+                        ${payment.notes ? `
+                        <div class="payment-notes">
+                            <div class="payment-notes-label">Notes</div>
+                            <div class="payment-notes-text">${payment.notes}</div>
+                        </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+            
+            paymentsList.innerHTML = paymentsHTML;
+            
+            // Show payments content
+            paymentsContent.classList.add('show');
+            noPayments.classList.remove('show');
+        }
+
+        /**
+         * Show no payments message
+         */
+        function showNoPayments() {
+            paymentsContent.classList.remove('show');
+            noPayments.classList.add('show');
+            paymentsCount.textContent = '0';
+        }
+
+        /**
+         * Format date for display
+         * @param {string} dateString - Date string to format
+         * @returns {string} - Formatted date
+         */
+        function formatDate(dateString) {
+            if (!dateString || dateString === 'N/A') {
+                return 'N/A';
+            }
+            
+            try {
+                const date = new Date(dateString);
+                if (isNaN(date.getTime())) {
+                    return dateString; // Return original if invalid date
+                }
+                
+                return date.toLocaleDateString('en-PH', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+            } catch (error) {
+                return dateString; // Return original if error
+            }
+        }
+    </script>
+</body>
+</html>
